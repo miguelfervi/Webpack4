@@ -2,6 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
     <title>webpack 4 quickstart</title>
     <link
       rel="stylesheet"
@@ -9,11 +13,17 @@
     />
   </head>
   <body>
-    <div id="app">
-      <p>Para introducir un item, pulsa en el botón +</p>
-      <input id="add" type="button" value="+" />
-      <input id="remove" type="button" value="-" />
-      <ul id="list"></ul>
+    <div id="app" class="ui centered ui grid">
+      <div class="ui center aligned">
+        <h3 style="margin-top:50px">Prueba Técnica JS</h3>
+        <div>Pulsa en el botón añadir para insertar items</div>
+        <div class="ui divider"></div>
+
+        <button id="add" class="ui primary button">Añadir</button>
+        <button id="remove" class="ui red button">Eliminar</button>
+        <button id="undo" class="ui teal button">Deshacer</button>
+        <div id="list" class="ui list center"></div>
+      </div>
     </div>
   </body>
 </html>

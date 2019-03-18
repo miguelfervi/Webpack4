@@ -1,4 +1,13 @@
 .selected {
-  background-color: blue;
+  background-color: grey;
   color: white;
+  cursor: pointer;
+}
+
+#list {
+  font-size: 2rem;
+}
+
+#list > div {
+  cursor: pointer;
 }
