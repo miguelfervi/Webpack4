@@ -1,8 +1,8 @@
 import "./main.css";
 
-let addButton = document.querySelector("#addButton");
-let removeButton = document.querySelector("#removeButton");
-let undoButton = document.querySelector("#undoButton");
+const addButton = document.querySelector("#addButton");
+const removeButton = document.querySelector("#removeButton");
+const undoButton = document.querySelector("#undoButton");
 let totalList = document.querySelector("#list");
 
 let children = null;
@@ -12,7 +12,7 @@ let item = null;
 addButton.addEventListener("click", () => {
   do {
     item = prompt("Introduce un item");
-  } while (item && item.trim() === "");
+  } while ((item && item.trim() === "") || item === "");
   if (item) {
     const element = document.createElement("div");
     element.classList.add("item");
@@ -24,12 +24,12 @@ addButton.addEventListener("click", () => {
   }
 });
 
-let addEvents = element => {
+const addEvents = element => {
   element.addEventListener("click", () => {
     element.classList.toggle("selected");
   });
   element.addEventListener("dblclick", () => {
-    element.parentNode.removeChild(element);
+    totalList.removeChild(element);
     children = totalList.innerHTML;
     undoHistory.push(children);
   });
@@ -40,7 +40,7 @@ removeButton.addEventListener("click", () => {
 
   items.forEach(element => {
     if (element.classList.contains("selected")) {
-      element.parentNode.removeChild(element);
+      totalList.removeChild(element);
       children = totalList.innerHTML;
       undoHistory.push(children);
     }
@@ -48,10 +48,16 @@ removeButton.addEventListener("click", () => {
 });
 
 undoButton.addEventListener("click", () => {
-  totalList.innerHTML = "";
-  undoHistory.splice(-1, 1);
+  while (totalList.firstChild) {
+    totalList.removeChild(totalList.firstChild);
+  }
+  undoHistory.pop();
+
   if (undoHistory.length > 0) {
     totalList.innerHTML = undoHistory[undoHistory.length - 1];
+    let newChilds = Array.from(totalList.childNodes);
+    newChilds.forEach(element => {
+      addEvents(element);
+    });
   }
-  console.log(undoHistory);
 });
