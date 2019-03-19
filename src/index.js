@@ -6,9 +6,9 @@ const undo = document.getElementById('undo')
 let totalList = document.getElementById('list')
 
 let undoHistory = []
+let item = null
 
 add.addEventListener('click', () => {
-  let item
   do {
     item = prompt('Introduce un item')
   } while (item === '')
@@ -22,9 +22,9 @@ add.addEventListener('click', () => {
   }
 })
 remove.addEventListener('click', () => {
-  let items = document.querySelectorAll('.item')
+  const items = document.querySelectorAll('.item')
 
-  items.forEach(function (element) {
+  items.forEach((element) => {
     if (element.classList.contains('selected')) {
       element.parentNode.removeChild(element)
       undoHistory.push(totalList)
