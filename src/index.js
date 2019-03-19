@@ -1,15 +1,15 @@
 import "./main.css";
 
-const add = document.getElementById("add");
-const remove = document.getElementById("remove");
-const undo = document.getElementById("undo");
-const totalList = document.getElementById("list");
-let children = null;
+let addButton = document.querySelector("#addButton");
+let removeButton = document.querySelector("#removeButton");
+let undoButton = document.querySelector("#undoButton");
+let totalList = document.querySelector("#list");
 
-const undoHistory = [];
+let children = null;
+let undoHistory = [];
 let item = null;
 
-add.addEventListener("click", () => {
+addButton.addEventListener("click", () => {
   do {
     item = prompt("Introduce un item");
   } while (item.trim === "");
@@ -24,37 +24,32 @@ add.addEventListener("click", () => {
   }
 });
 
-const addEvents = element => {
-  console.log(element);
+let addEvents = element => {
   element.addEventListener("click", () => {
     element.classList.toggle("selected");
-    children = totalList.innerHTML;
-    undoHistory.push(children);
-    console.log(undoHistory);
   });
   element.addEventListener("dblclick", () => {
     element.parentNode.removeChild(element);
     children = totalList.innerHTML;
     undoHistory.push(children);
-    console.log(undoHistory);
   });
 };
 
-remove.addEventListener("click", () => {
-  children.forEach(element => {
+removeButton.addEventListener("click", () => {
+  const items = document.querySelectorAll(".item");
+
+  items.forEach(element => {
     if (element.classList.contains("selected")) {
       element.parentNode.removeChild(element);
       children = totalList.innerHTML;
       undoHistory.push(children);
-      console.log(undoHistory);
     }
   });
 });
 
-undo.addEventListener("click", () => {
-  console.log("Entro");
+undoButton.addEventListener("click", () => {
   totalList.innerHTML = "";
-  undoHistory.pop();
+  undoHistory.splice(-1, 1);
   if (undoHistory.length > 0) {
     totalList.innerHTML = undoHistory[undoHistory.length - 1];
   }
