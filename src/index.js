@@ -1,32 +1,33 @@
 import './main.css'
 
-const list = document.getElementById('list')
 const add = document.getElementById('add')
 const remove = document.getElementById('remove')
 const undo = document.getElementById('undo')
+let totalList = document.getElementById('list')
 
 let undoHistory = []
 
 add.addEventListener('click', () => {
   let item
   do {
-    item = prompt('Inserta algo')
+    item = prompt('Introduce un item')
   } while (item === '')
   if (item) {
     let element = document.createElement('div')
     element.classList.add('item')
     element.appendChild(document.createTextNode(item))
     addEvents(element)
-    list.appendChild(element)
-    undoHistory.push(list)
+    totalList.appendChild(element)
+    undoHistory.push(totalList)
   }
 })
-
 remove.addEventListener('click', () => {
-  let list = document.querySelectorAll('div')
-  list.forEach(function (element) {
+  let items = document.querySelectorAll('.item')
+
+  items.forEach(function (element) {
     if (element.classList.contains('selected')) {
       element.parentNode.removeChild(element)
+      undoHistory.push(totalList)
     }
   })
 })
@@ -37,20 +38,22 @@ const addEvents = element => {
   })
   element.addEventListener('dblclick', () => {
     element.parentNode.removeChild(element)
-    undoHistory.push(list)
+    undoHistory.push(totalList)
   })
 }
 
 undo.addEventListener('click', () => {
-  let list = document.querySelector('#list')
+  console.log('totalList', totalList)
 
-  const arrayNodes = Array.from(undoHistory[0].childNodes)
-
-  while (list.firstChild) {
-    list.removeChild(list.firstChild)
+  console.log(undoHistory)
+  while (totalList.firstChild) {
+    totalList.removeChild(totalList.firstChild)
   }
-  arrayNodes.pop()
-  arrayNodes.forEach(function (element) {
-    list.appendChild(element)
-  })
+  undoHistory.pop()
+  console.log(undoHistory)
+
+  var lastPosition = undoHistory.length - 1
+
+  console.log(lastPosition)
+  console.log('undo list', undoHistory[lastPosition])
 })
