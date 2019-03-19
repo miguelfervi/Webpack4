@@ -12,7 +12,7 @@ let item = null;
 addButton.addEventListener("click", () => {
   do {
     item = prompt("Introduce un item");
-  } while (item.trim === "");
+  } while (item && item.trim() === "");
   if (item) {
     const element = document.createElement("div");
     element.classList.add("item");
